@@ -53,6 +53,10 @@ Los scripts de `scripts/` están montados dentro del contenedor en `/scripts`. S
 | 2 | `scripts/bronze/ddl_bronze.sql` | Crea las tablas de la capa Bronze |
 | 3 | `scripts/bronze/proc_load_bronze.sql` | Crea el procedimiento `bronze.load_bronze` |
 | 4 | `EXEC bronze.load_bronze;` | Carga los CSV en Bronze |
+| 5 | `scripts/silver/ddl_silver.sql` | Crea las tablas de la capa Silver |
+| 6 | `scripts/silver/proc_load_silver.sql` | Crea el procedimiento `silver.load_silver` |
+| 7 | `EXEC silver.load_silver;` | Limpia y carga los datos en Silver |
+| 8 | `tests/quality_checks_silver.sql` | Valida la calidad de Silver |
 
 Ejemplo de ejecución de un script:
 ```powershell
@@ -67,13 +71,18 @@ El proyecto original usa SQL Server en Windows. Aquí SQL Server corre en un con
 - **Rutas del `BULK INSERT`:** en `proc_load_bronze.sql` se cambiaron las rutas `C:\sql\dwh_project\01_datasets\...` por `/datasets/...`. La carpeta `datasets/` del repo se monta en el contenedor mediante `docker-compose.yml`.
 - **Nombres de archivo en mayúsculas:** Linux distingue mayúsculas de minúsculas. Los archivos del ERP se llaman `CUST_AZ12.csv`, `LOC_A101.csv` y `PX_CAT_G1V2.csv`, y las rutas del procedimiento usan exactamente esos nombres.
 - **Saltos de línea:** el archivo `.gitattributes` evita que Git convierta los CSV a formato CRLF, ya que SQL Server en Linux podría leer mal la última columna de cada fila.
+- **Terminador de fila en el `BULK INSERT`:** los CSV vienen con saltos de línea CRLF (`\r\n`). En SQL Server para Linux, el terminador por defecto deja un `\r` pegado al último valor de cada fila, lo que rompía la normalización de las columnas finales en Silver (`gen`, `cntry` y `maintenance` quedaban como `n/a` o en blanco). Se agregó `ROWTERMINATOR = '0x0d0a'` a los seis `BULK INSERT` de `proc_load_bronze.sql`.
 - **Contenedor:** se usa la imagen `mcr.microsoft.com/mssql/server:2022-latest` con `platform: linux/amd64`.
+
+## Observaciones de calidad de datos
+- **Fechas de nacimiento:** `silver.erp_cust_az12` conserva 15 clientes nacidos entre 1916 y 1923. Son atípicos, pero el procedimiento solo anula las fechas futuras.
+- **Países:** los valores vacíos o nulos de `cntry` se estandarizan como `n/a`.
 
 ## Estado del proyecto
 - [x] Estructura del repositorio y entorno Docker
 - [x] Inicialización de la base de datos y esquemas
 - [x] Capa Bronze
-- [ ] Capa Silver
+- [x] Capa Silver
 - [ ] Capa Gold
 - [ ] Documentación (diagramas y catálogo de datos)
 
