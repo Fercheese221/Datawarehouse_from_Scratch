@@ -80,9 +80,15 @@ El proyecto original usa SQL Server en Windows. Aquí SQL Server corre en un con
 - **Fechas de nacimiento:** `silver.erp_cust_az12` conserva 15 clientes nacidos entre 1916 y 1923. Son atípicos, pero el procedimiento solo anula las fechas futuras.
 - **Países:** los valores vacíos o nulos de `cntry` se estandarizan como `n/a`.
 
+## Arquitectura
+![Arquitectura de datos](docs/data_architecture.png)
+
 ## Documentación
 - [Catálogo de datos de Gold](docs/data_catalog.md)
 - [Convenciones de nombres](docs/naming_conventions.md)
+- [Flujo de datos](docs/data_flow.png)
+- [Modelo de integración](docs/integration_model.png)
+- [Modelo de datos Gold (esquema estrella)](docs/data_model.png)
 
 ## Estado del proyecto
 - [x] Estructura del repositorio y entorno Docker
@@ -90,7 +96,5 @@ El proyecto original usa SQL Server en Windows. Aquí SQL Server corre en un con
 - [x] Capa Bronze
 - [x] Capa Silver
 - [x] Capa Gold
-- [ ] Documentación (diagramas y catálogo de datos)
+- [x] Documentación (diagramas y catálogo de datos)
 
-
-> README en construcción: se irá completando conforme avance cada fase.
