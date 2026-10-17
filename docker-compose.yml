@@ -14,5 +14,6 @@ services:
       - sql-dwh-project-data:/var/opt/mssql
       - ./datasets:/datasets:ro
       - ./scripts:/scripts:ro
+      - ./tests:/tests:ro
 volumes:
   sql-dwh-project-data:
