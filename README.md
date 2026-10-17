@@ -80,6 +80,10 @@ El proyecto original usa SQL Server en Windows. Aquí SQL Server corre en un con
 - **Fechas de nacimiento:** `silver.erp_cust_az12` conserva 15 clientes nacidos entre 1916 y 1923. Son atípicos, pero el procedimiento solo anula las fechas futuras.
 - **Países:** los valores vacíos o nulos de `cntry` se estandarizan como `n/a`.
 
+## Documentación
+- [Catálogo de datos de Gold](docs/data_catalog.md)
+- [Convenciones de nombres](docs/naming_conventions.md)
+
 ## Estado del proyecto
 - [x] Estructura del repositorio y entorno Docker
 - [x] Inicialización de la base de datos y esquemas
