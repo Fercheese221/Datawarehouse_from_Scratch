@@ -57,6 +57,8 @@ Los scripts de `scripts/` están montados dentro del contenedor en `/scripts`. S
 | 6 | `scripts/silver/proc_load_silver.sql` | Crea el procedimiento `silver.load_silver` |
 | 7 | `EXEC silver.load_silver;` | Limpia y carga los datos en Silver |
 | 8 | `tests/quality_checks_silver.sql` | Valida la calidad de Silver |
+| 9 | `scripts/gold/ddl_gold.sql` | Crea las vistas de Gold (`dim_customers`, `dim_products`, `fact_sales`) |
+| 10 | `tests/quality_checks_gold.sql` | Valida llaves y integridad referencial del modelo estrella |
 
 Ejemplo de ejecución de un script:
 ```powershell
@@ -83,7 +85,7 @@ El proyecto original usa SQL Server en Windows. Aquí SQL Server corre en un con
 - [x] Inicialización de la base de datos y esquemas
 - [x] Capa Bronze
 - [x] Capa Silver
-- [ ] Capa Gold
+- [x] Capa Gold
 - [ ] Documentación (diagramas y catálogo de datos)
 
 
